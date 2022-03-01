@@ -1,0 +1,94 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container" style="margin-top: 30px">
+  <div class="row">
+    <div class="col-3"></div>
+    <div
+      class="col-6 bg-light border rounded-3"
+      style="padding-left: 5px; padding-right: 5px"
+    >
+      <h1 class="display-4"><strong>Dodaj Symulację</strong></h1>
+      <hr class="my-4" />
+      <p></p>
+      <div style="height: 500px; overflow-y: auto">
+        <form action="/simulation" method="POST">
+          <div class="form-group">
+            <label for="simulationName">Nazwa symulacji</label>
+            <input
+              name="name"
+              type="text"
+              class="form-control"
+              id="simulationName"
+              placeholder="Podaj nazwę symulacji"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="system">Wybierz system</label>
+            <select multiple class="form-control" id="system" name="system">
+              {% for system in system_list %}
+              <option>{{system.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="timeHorizon">Horyzont czasowy symulacji</label>
+            <input
+              name="time_horizon"
+              type="text"
+              class="form-control"
+              id="timeHorizon"
+              placeholder="Podaj wartość horyzontu czasowego"
+            />
+          </div>
+          <div class="form-group">
+            <label for="timeChange">Zmiana czasu symulacji</label>
+            <input
+              name="time_change"
+              type="text"
+              class="form-control"
+              id="timeChange"
+              placeholder="Podaj wartość zmiany czasu"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="timeRepair">Czas naprawy</label>
+            <input
+              name="time_repair"
+              type="text"
+              class="form-control"
+              id="timeRepair"
+              placeholder="Podaj wartość czasu naprawy"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="numberOfIterations">Liczba iteracji</label>
+            <input
+              name="number_of_iterations"
+              type="text"
+              class="form-control"
+              id="numberOfIterations"
+              placeholder="Podaj liczbę iteracji symulacji"
+            />
+          </div>
+
+          <br />
+
+          <button type="submit" class="btn btn-success">Dodaj Symulację</button>
+          <a
+            class="btn btn-primary btn-md"
+            href="{{url_for('home')}}"
+            role="button"
+            >Wróć</a
+          >
+        </form>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

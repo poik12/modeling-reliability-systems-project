@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% block content %}
+
+<style>
+  img {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<div class="container" style="margin-top: 30px">
+  <div class="row">
+    <div class="col-2"></div>
+    <div
+      class="col-8 bg-light border rounded-3"
+      style="padding-left: 5px; padding-right: 5px"
+    >
+      <h1 class="display-4"><strong>Szczegóły systemu</strong></h1>
+      <hr class="my-4" />
+      <a
+        class="btn btn-primary btn-sm"
+        href="/system/update/{{system.id}}"
+        role="button"
+        >Zmień</a
+      >
+      <a class="btn btn-secondary btn-sm" href="/" role="button">Wróć</a>
+
+      <hr class="my-4" />
+      <p><strong>Nazwa systemu:</strong> {{system.name}}</p>
+      <p>
+        <strong>Struktura niezawodnościowa:</strong>
+        {{system.reliability_structure}}
+      </p>
+      <p>
+        <strong>Liczba układów w systemie:</strong>
+        {{system.number_of_subsystems}}
+      </p>
+      <p><strong>System stworzony:</strong> {{system.created_on}}</p>
+      <p><strong>System zaktualizowany:</strong> {{system.updated_on}}</p>
+      <div>
+        <p><strong>Układy w systmie:</strong></p>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Lp.</th>
+              <th scope="col">Nazwa układu</th>
+              <th scope="col">Struktura niezawodnościowa</th>
+              <th scope="col">Liczba elementów</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for subsystem in system.subsystem_list %}
+            <tr>
+              <th scope="row">{{loop.index}}</th>
+              <td>{{subsystem.name}}</td>
+              <td>{{subsystem.reliability_structure}}</td>
+              <td>{{subsystem.number_of_elements}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div
+      class="border rounded-3"
+      style="margin-top: 10px; padding: 5px; text-align: center"
+    >
+      <img src="{{url_for('static', filename=system_img)}}" alt="" />
+    </div>
+  </div>
+</div>
+
+{% endblock %}

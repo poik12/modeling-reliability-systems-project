@@ -1,0 +1,55 @@
+<div
+  class="bg-light border rounded-3"
+  style="padding-left: 5px; padding-right: 5px"
+>
+  <h1 class="display-4"><strong>Elementy</strong></h1>
+  <p class="lead">Elementy wchodzące w skład układów systemu.</p>
+  <hr class="my-4" />
+  <p>
+    <a
+      class="btn btn-success btn-md"
+      href="{{url_for('element')}}"
+      role="button"
+      >Dodaj element</a
+    >
+  </p>
+  <div style="height: 400px; overflow-y: auto">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Lp.</th>
+          <th scope="col">Nazwa</th>
+          <th scope="col">Inten. uszkodeń</th>
+          <th scope="col">Inten. napraw</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for element in element_list %}
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+          <td>{{element.name}}</td>
+          <td>{{element.damage_intensity}}</td>
+          <td>{{element.repair_intensity}}</td>
+          <td>
+            <a
+              class="btn btn-primary btn-sm"
+              href="/element/update/{{element.id}}"
+              role="button"
+              >Zmień</a
+            >
+            <a
+              class="btn btn-danger btn-sm"
+              href="/element/delete/{{element.id}}"
+              role="button"
+              >Usuń</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br />
+  <p><strong>Liczba elementów: {{ element_list|length }}</strong></p>
+</div>

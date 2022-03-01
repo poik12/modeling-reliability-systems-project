@@ -1,0 +1,54 @@
+<div
+  class="bg-light border rounded-3"
+  style="padding-left: 5px; padding-right: 5px"
+>
+  <h1 class="display-4"><strong>Układy</strong></h1>
+  <p class="lead">Układy wchodzące w skład systemu.</p>
+  <hr class="my-4" />
+  <p>
+    <a class="btn btn-success btn-md" href="/subsystem" role="button"
+      >Dodaj układ</a
+    >
+  </p>
+  <div style="height: 400px; overflow-y: auto">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Lp.</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Struktura</th>
+            <th scope="col">Liczba elementów</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for subsystem in subsystem_list %}
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{subsystem.name}}</td>
+            <td>{{subsystem.reliability_structure}}</td>
+            <td>{{subsystem.number_of_elements}}</td>
+            <td>
+              <a
+                class="btn btn-primary btn-sm"
+                href="/subsystem/{{subsystem.id}}"
+                role="button"
+                >Szczegóły</a
+              >
+              <a
+                class="btn btn-danger btn-sm"
+                href="/subsystem/delete/{{subsystem.id}}"
+                role="button"
+                >Usuń</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br />
+  <p><strong>Liczba układów: {{ subsystem_list|length }}</strong></p>
+</div>

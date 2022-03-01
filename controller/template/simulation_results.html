@@ -1,0 +1,160 @@
+{% extends 'base.html' %} {% block content %}
+
+<style>
+  img {
+    height: 550px;
+    width: 750px;
+  }
+
+  .img__system {
+    height: 100%;
+    width: 100%;
+  }
+
+</style>
+
+<div class="container-fluid" style="margin-top: 30px">
+  <div class="row">
+    <div class="col-1"></div>
+    <div
+      class="col-5 bg-light border rounded-3"
+      style="padding-left: 5px; padding-right: 5px"
+    >
+      <h1 class="display-4"><strong>Wyniki symulacji</strong></h1>
+      <hr class="my-4" />
+      <div class="row">
+        <div class="col-12">
+          <a class="btn btn-secondary btn-md float-start" href="/" role="button">Wróć</a>
+          <a class="btn btn-warning btn-md float-end" style="color: white" href="/simulation/{{simulation.id}}/pdf" role="button">
+          Generuj raport
+          </a>
+        </div>
+      </div>
+      
+      <hr class="my-4" />
+      <p><strong>Nazwa symulacji:</strong> {{simulation.name}}</p>
+      <p>
+        <strong>Horyzont czasowy dymulacji:</strong> {{simulation.time_horizon}}
+        dni
+      </p>
+      <p>
+        <strong>Zmiana czasu symulacji:</strong> {{simulation.time_change}} dni
+      </p>
+      <p><strong>Czas naprawy:</strong> {{simulation.time_repair}} dni</p>
+      <p>
+        <strong>Liczba iteracji:</strong> {{simulation.number_of_iterations}}
+      </p>
+      <p>
+        <strong>Wybrany system:</strong>
+        {{simulation.system.name}}
+      </p>
+      <p>
+        <strong>Struktura niezawodnościowa systemu:</strong>
+        {{simulation.system.reliability_structure}}
+      </p>
+      <p>
+        <strong>Liczba układów w systemie:</strong>
+        {{simulation.system.number_of_subsystems}}
+      </p>
+      <p><strong>Symulacja stworzona:</strong> {{simulation.created_on}}</p>
+      <p>
+        <strong>Symylacja zaktualizowana:</strong> {{simulation.updated_on}}
+      </p>
+      <div>
+        <p><strong>Układy w systemie:</strong></p>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Lp.</th>
+              <th scope="col">Nazwa układu</th>
+              <th scope="col">Struktura niezawodnościowa</th>
+              <th scope="col">Liczba elementów</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for subsystem in simulation.system.subsystem_list %}
+            <tr>
+              <th scope="row">{{loop.index}}</th>
+              <td>{{subsystem.name}}</td>
+              <td>{{subsystem.reliability_structure}}</td>
+              <td>{{subsystem.number_of_elements}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <div class="col-5 bg-light border rounded-3"
+    style="padding-left: 5px; padding-right: 5px">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <th colspan="2">Elementy wchodzące w skład układów</th>
+      </thead>
+      {% for subsystem in subsystem_list %}
+      <tr>
+        <td>{{subsystem.name}}</td>
+        <td>
+        <table class="table table-bordered">
+          <thead>
+            <th scope="col">Lp.</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Inten. uszkodzeń</th>
+            <th scope="col">Inten. napraw</th>
+          </thead>
+          {% for element in subsystem.elements %}
+          <tr>
+            <td>{{loop.index}}</td>
+            <td>{{element.name}}</td>
+            <td>{{element.damage_intensity}}</td>
+            <td>{{element.repair_intensity}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    </div>
+    <div class="col-1"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-2"></div>
+    <div
+      class="col-8 border rounded-3"
+      style="margin-top: 10px; padding: 5px; text-align: center"
+    >
+      <img class="img__system" src="{{url_for('static', filename=system_img)}}" alt="" />
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+  <div
+      class="row bg-light border rounded-3"
+      style="margin: 10px; padding: 5px; text-align: center"
+    >
+      <p>
+        <h1>Wyniki symulacji</h1>
+      </p>
+      <p>
+        <img
+        src="{{url_for('static', filename=charts['failure_probability_density'])}}" alt="" style="border: 2px solid lightgray;" />
+        <img
+        src="{{url_for('static', filename=charts['repair_probability_density'])}}" alt="" style="border: 2px solid lightgray;" />
+      </p>
+        <p>
+          <img
+          src="{{url_for('static', filename=charts['empirical_reliability_function'])}}" alt="" style="border: 2px solid lightgray;"/>
+          <img
+            src="{{url_for('static', filename=charts['empirical_failure_function'])}}" alt="" style="border: 2px solid lightgray;" />
+        </p>
+        <p>
+          <img src="{{url_for('static', filename=charts['histogram'])}}" alt="" style="border: 2px solid lightgray;"/>
+        </p>
+    </div>
+    
+</div>
+
+{% endblock %}

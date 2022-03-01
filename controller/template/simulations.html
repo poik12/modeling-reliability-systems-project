@@ -1,0 +1,62 @@
+<div class="bg-light border rounded-3" style="padding: 10px">
+  <h1 class="display-4"><strong>Symulacje</strong></h1>
+  <p class="lead">Zbudowane symulacje.</p>
+  <hr class="my-4" />
+  <p>
+    <a class="btn btn-success btn" href="/simulation" role="button"
+      >Dodaj symulację</a
+    >
+  </p>
+
+  <div style="height: 400px; overflow-y: auto">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Lp.</th>
+          <th scope="col">Nazwa</th>
+          <th scope="col">System</th>
+          <th scope="col">Horyzont czasowy</th>
+          <th scope="col">Zmiana czasu</th>
+          <th scope="col">Czas naprawy</th>
+          <th scope="col">Liczba iteracji</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for simulation in simulation_list %}
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+          <td>{{simulation.name}}</td>
+          <td>{{simulation.system.name}}</td>
+          <td>{{simulation.time_horizon}}</td>
+          <td>{{simulation.time_change}}</td>
+          <td>{{simulation.time_repair}}</td>
+          <td>{{simulation.number_of_iterations}}</td>
+          <td>
+            <a
+              class="btn btn-primary btn-sm"
+              href="/simulation/{{simulation.id}}"
+              role="button"
+              >Szczegóły</a
+            >
+            <a
+              class="btn btn-danger btn-sm"
+              href="/simulation/delete/{{simulation.id}}"
+              role="button"
+              >Usuń</a
+            >
+            <a
+              class="btn btn-success btn-sm"
+              href="/simulation/{{simulation.id}}/results"
+              role="button"
+              >Symuluj</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br />
+  <p><strong>Liczba symulacji: {{ simulation_list|length }}</strong></p>
+</div>
